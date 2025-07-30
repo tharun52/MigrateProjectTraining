@@ -16,11 +16,6 @@ namespace ShoppingApp.Models
         public Nullable<int> Storage { get; set; }
         public Nullable<System.DateTime> SellStartDate { get; set; }
         public Nullable<System.DateTime> SellEndDate { get; set; }
-        public Nullable<int> IsNew { get; set; }    
-        public virtual Category? Category { get; set; }
-        public virtual Color? Color { get; set; }
-        public virtual Model? Model { get; set; }
-        public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
-        public virtual User? User { get; set; }
+        public int IsNew { get; set; }   
     }
 }

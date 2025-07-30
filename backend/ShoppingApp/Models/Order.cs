@@ -7,6 +7,7 @@ namespace ShoppingApp.Models
         [Key]
         public int OrderID { get; set; }
         public string OrderName { get; set; } = string.Empty;
+        public int UserId { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
         public string PaymentType { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;

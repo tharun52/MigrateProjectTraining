@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ShoppingApp.Contexts;
@@ -11,9 +12,11 @@ using ShoppingApp.Contexts;
 namespace ShoppingApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250729112037_orderdetailid")]
+    partial class orderdetailid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,9 +184,6 @@ namespace ShoppingApp.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("OrderID");
 
                     b.ToTable("Orders");
@@ -206,6 +206,9 @@ namespace ShoppingApp.Migrations
                     b.Property<int>("ProductID")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("Quantity")
                         .HasColumnType("integer");
 
@@ -214,6 +217,8 @@ namespace ShoppingApp.Migrations
                     b.HasIndex("OrderID");
 
                     b.HasIndex("ProductID");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderDetails");
                 });
@@ -229,7 +234,13 @@ namespace ShoppingApp.Migrations
                     b.Property<int?>("CategoryId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("CategoryId1")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("ColorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ColorId1")
                         .HasColumnType("integer");
 
                     b.Property<string>("Image")
@@ -240,6 +251,9 @@ namespace ShoppingApp.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int?>("ModelId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ModelId1")
                         .HasColumnType("integer");
 
                     b.Property<double?>("Price")
@@ -261,15 +275,26 @@ namespace ShoppingApp.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("integer");
+
                     b.HasKey("ProductId");
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("CategoryId1");
+
                     b.HasIndex("ColorId");
+
+                    b.HasIndex("ColorId1");
 
                     b.HasIndex("ModelId");
 
+                    b.HasIndex("ModelId1");
+
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Products");
                 });
@@ -349,6 +374,10 @@ namespace ShoppingApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ShoppingApp.Models.Product", null)
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("ProductId");
+
                     b.Navigation("Order");
 
                     b.Navigation("Product");
@@ -356,21 +385,49 @@ namespace ShoppingApp.Migrations
 
             modelBuilder.Entity("ShoppingApp.Models.Product", b =>
                 {
+                    b.HasOne("ShoppingApp.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("ShoppingApp.Models.Category", null)
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId1");
+
+                    b.HasOne("ShoppingApp.Models.Color", "Color")
+                        .WithMany()
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ShoppingApp.Models.Color", null)
                         .WithMany("Products")
-                        .HasForeignKey("ColorId");
+                        .HasForeignKey("ColorId1");
+
+                    b.HasOne("ShoppingApp.Models.Model", "Model")
+                        .WithMany()
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ShoppingApp.Models.Model", null)
                         .WithMany("Products")
-                        .HasForeignKey("ModelId");
+                        .HasForeignKey("ModelId1");
+
+                    b.HasOne("ShoppingApp.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ShoppingApp.Models.User", null)
                         .WithMany("Products")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Color");
+
+                    b.Navigation("Model");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ShoppingApp.Models.Category", b =>
@@ -389,6 +446,11 @@ namespace ShoppingApp.Migrations
                 });
 
             modelBuilder.Entity("ShoppingApp.Models.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("ShoppingApp.Models.Product", b =>
                 {
                     b.Navigation("OrderDetails");
                 });

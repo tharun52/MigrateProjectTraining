@@ -23,40 +23,35 @@ namespace ShoppingApp.Contexts
         {
             base.OnModelCreating(modelBuilder);
 
-            // Product -> Category
-            modelBuilder.Entity<Product>()
-                .HasOne(p => p.Category)
-                .WithMany()
-                .HasForeignKey(p => p.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(od => od.Order)
+                .WithMany(o => o.OrderDetails)
+                .HasForeignKey(od => od.OrderID);
 
-            // Product -> Color
-            modelBuilder.Entity<Product>()
-                .HasOne(p => p.Color)
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(od => od.Product)
                 .WithMany()
-                .HasForeignKey(p => p.ColorId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Product -> Model
+                .HasForeignKey(od => od.ProductID);
+                
             modelBuilder.Entity<Product>()
-                .HasOne(p => p.Model)
-                .WithMany()
-                .HasForeignKey(p => p.ModelId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasOne<Category>()
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId);
 
-            // Product -> User
             modelBuilder.Entity<Product>()
-                .HasOne(p => p.User)
-                .WithMany()
-                .HasForeignKey(p => p.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasOne<Color>()
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.ColorId);
 
-            // Product -> OrderDetails
             modelBuilder.Entity<Product>()
-                .HasMany(p => p.OrderDetails)
-                .WithOne(od => od.Product)
-                .HasForeignKey(od => od.ProductID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne<Model>()
+                .WithMany(m => m.Products)
+                .HasForeignKey(p => p.ModelId);
+
+            modelBuilder.Entity<Product>()
+                .HasOne<User>()
+                .WithMany(u => u.Products)
+                .HasForeignKey(p => p.UserId);
         }
     }
 }
