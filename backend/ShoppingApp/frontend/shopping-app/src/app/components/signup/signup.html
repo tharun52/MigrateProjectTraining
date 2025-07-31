@@ -1,0 +1,41 @@
+<div class="container mt-5">
+  <h2>Signup</h2>
+
+  <!-- Error Message -->
+  @if (error) {
+    <div class="alert alert-danger">{{ error }}</div>
+  }
+
+  <!-- Signup Form -->
+  <form [formGroup]="signupForm" (ngSubmit)="handleSignup()">
+    <!-- Username -->
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Username" formControlName="username" />
+      @if (username?.touched && username?.invalid) {
+        <div class="text-danger mt-1">
+          Username is required
+        </div>
+      }
+    </div>
+
+    <!-- Password -->
+    <div class="mb-3">
+      <input type="password" class="form-control" placeholder="Password" formControlName="password" />
+      @if (password?.touched && password?.invalid) {
+        <div class="text-danger mt-1">
+          Password is required (min 6 characters)
+        </div>
+      }
+    </div>
+
+    <!-- Submit Button -->
+    <button class="btn btn-success" type="submit" [disabled]="signupForm.invalid || loading">
+      @if (!loading) {
+        Signup
+      }
+      @else {
+        <span class="spinner-border spinner-border-sm" role="status"></span> Signing up...
+      }
+    </button>
+  </form>
+</div>

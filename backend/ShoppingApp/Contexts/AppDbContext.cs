@@ -18,7 +18,6 @@ namespace ShoppingApp.Contexts
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ContactU> ContactUs { get; set; }
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

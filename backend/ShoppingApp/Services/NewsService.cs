@@ -58,10 +58,9 @@ namespace ShoppingApp.Services
                 .SingleOrDefault(u => u.Username == loggedInUser)
                 ?? throw new Exception("No User Logged in") ;
 
-            var userId = user.UserId;
             var news = new News
             {
-                UserId = userId,
+                UserId = user.UserId,
                 Title = newsDto.Title,
                 ShortDescription = newsDto.ShortDescription,
                 Image = imagePath,
