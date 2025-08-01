@@ -25,6 +25,21 @@
         }
         @if (auth.isLoggedIn()) {
           <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-1" routerLink="/home">
+              Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-1" routerLink="/contact">
+              Contact Us
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-1" routerLink="/news">
+              News
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link d-flex align-items-center gap-1" href="#" (click)="logout()">
               <i class="bi bi-box-arrow-right"></i> Logout
             </a>

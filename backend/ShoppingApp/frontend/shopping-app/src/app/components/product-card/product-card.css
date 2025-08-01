@@ -1,22 +1,22 @@
 .product-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background: #fff;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   overflow: hidden;
-  border: none;
+  border: 2px solid transparent;
+  background-color: #fff;
 }
 
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 15px rgba(142, 45, 226, 0.2), 0 10px 20px rgba(74, 0, 224, 0.2);
-}
-
-.product-card img {
-  object-fit: cover;
-  height: 100%;
+.product-img-top {
   width: 100%;
-  border-top-left-radius: 1.5rem;
-  border-bottom-left-radius: 1.5rem;
+  height: 280px;
+  object-fit: cover;
+  border-bottom: 4px solid transparent;
+}
+
+.gradient-border {
+  border-top: 3px solid;
+  border-image: linear-gradient(to right, #8e2de2, #4a00e0) 1;
+  padding-top: 1rem;
 }
 
 .text-gradient {
@@ -27,22 +27,5 @@
 
 .bg-gradient {
   background: linear-gradient(to right, #8e2de2, #4a00e0) !important;
-  border: none;
 }
 
-.badge.bg-gradient {
-  font-size: 0.85rem;
-  border-radius: 20px;
-}
-
-.card-body {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.card-text {
-  font-size: 0.95rem;
-  color: #333;
-}

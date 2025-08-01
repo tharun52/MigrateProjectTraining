@@ -18,7 +18,7 @@ export class ProductCard {
   error?: string;
   quantity: number = 1; 
   ImageUrl = `${environment.apiBaseUrl}/Image/`;
-
+  
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {

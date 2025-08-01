@@ -9,6 +9,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CaptchaService } from '../../services/captcha-service';
+import { environment } from '../../../environments/environment';
+
+declare const grecaptcha: any;
 
 @Component({
   selector: 'app-login',
@@ -22,9 +26,13 @@ export class Login {
   loading: boolean = false;
   error: string | null = null;
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private captchaService: CaptchaService
+  ) {
     this.loginForm = new FormGroup({
-      un: new FormControl('', { validators: Validators.required }),
+      un: new FormControl('', Validators.required),
       pass: new FormControl('', Validators.required),
     });
   }
@@ -36,34 +44,51 @@ export class Login {
   public get pass() {
     return this.loginForm.get('pass');
   }
+
   handleLogin() {
     if (this.loginForm.invalid) return;
 
     this.loading = true;
-    const username = this.un?.value;
-    const password = this.pass?.value;
+    this.error = null;
 
-    console.log('Attempting login with:', username, password);
+    grecaptcha.ready(() => {
+      grecaptcha
+        .execute(environment.captchakey, { action: 'login' })
+        .then((token: string) => {
+          this.captchaService.validateCaptcha(token).subscribe({
+            next: () => {
+              const username = this.un?.value;
+              const password = this.pass?.value;
 
-    this.auth.login(username, password).subscribe({
-      next: (res) => {
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('refreshToken', res.refreshToken);
+              console.log('Attempting login with:', username);
 
-        const role = this.auth.getRole();
+              this.auth.login(username, password).subscribe({
+                next: (res) => {
+                  localStorage.setItem('token', res.token);
+                  localStorage.setItem('refreshToken', res.refreshToken);
 
-        if (role === 'Admin') {
-          this.router.navigate(['/admin']);
-        } else {
-          this.router.navigate(['/home']);
-        }
+                  const role = this.auth.getRole();
 
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = err.error?.message || 'Login failed. Please try again.';
-        this.loading = false;
-      }
+                  if (role === 'Admin') {
+                    this.router.navigate(['/admin']);
+                  } else {
+                    this.router.navigate(['/home']);
+                  }
+
+                  this.loading = false;
+                },
+                error: (err) => {
+                  this.error = err.error?.message || 'Login failed. Please try again.';
+                  this.loading = false;
+                }
+              });
+            },
+            error: () => {
+              this.error = 'Captcha verification failed.';
+              this.loading = false;
+            }
+          });
+        });
     });
   }
 }

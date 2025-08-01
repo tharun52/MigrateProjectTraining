@@ -1,0 +1,22 @@
+<div class="container my-4">
+  <h2 class="text-center mb-4">Latest News</h2>
+  <div class="text-end mb-3">
+    <button class="btn btn-success" (click)="downloadExport()">Export as Excel</button>
+  </div>
+  @if (newsList && newsList.length) {
+  <div class="row">
+    @for (news of newsList; track $index) {
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img  [src]="ImageUrl + news.image.replace('uploads/', '')" class="card-img-top" alt="News Image" />
+        <div class="card-body">
+          <h5 class="card-title">{{ news.title }}</h5>
+          <p class="card-text">{{ news.shortDescription }}</p>
+          <small class="text-muted">{{ news.createdDate | date: 'dd MMM yyyy, h:mm a' }}</small>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>

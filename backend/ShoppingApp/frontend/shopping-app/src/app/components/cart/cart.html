@@ -1,49 +1,50 @@
 <div class="container my-5">
-  <h2 class="text-center mb-4">
-    <i class="bi bi-cart3 me-1"></i> Your Cart
-  </h2>
+    <h2 class="text-center mb-4">
+        <i class="bi bi-cart3 me-1"></i> Your Cart
+    </h2>
 
-  @if (isLoading) {
-    <div class="text-center my-5">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-  }
-
-  @if (!isLoading && cartItems.length === 0) {
-    <div class="text-center">
-      <p class="fs-5 text-muted">Your cart is empty.</p>
-    </div>
-  }
-
-  @if (!isLoading && cartItems.length > 0) {
-    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-      <span class="fs-5 fw-medium">
-        Total Items: <span class="badge bg-primary">{{ cartItems.length }}</span>
-      </span>
-      <div class="d-flex gap-2 mt-2 mt-md-0">
-        <button (click)="clearCart()" class="btn btn-outline-danger btn-sm">
-          <i class="bi bi-trash3-fill me-1"></i> Clear Cart
-        </button>
-        <a routerLink="/place-order" class="btn btn-success btn-sm">
-          <i class="bi bi-bag-check-fill me-1"></i> Place Order
-        </a>
-      </div>
-    </div>
-
-    <div class="row">
-      @for (item of cartItems; track $index) {
-        <div class="col-md-6 col-lg-4 mb-4 animate-fade-in">
-          <div class="card h-100 shadow-sm border-light">
-            <app-product-card [productId]="item.productId" [isCart]="true"></app-product-card>
-            <div class="card-body text-center pt-2">
-              <span class="badge bg-info text-dark fs-6">
-                Quantity: {{ item.quantity }}
-              </span>
+    @if (isLoading) {
+        <div class="text-center my-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
-          </div>
         </div>
-      }
-    </div>
-  }
+    }
+
+    @if (!isLoading && cartItems.length === 0) {
+        <div class="text-center">
+            <p class="fs-5 text-muted">Your cart is empty.</p>
+        </div>
+    }
+
+    @if (!isLoading && cartItems.length > 0) {
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+            <span class="fs-5 fw-medium">
+                Total Items: <span class="badge bg-primary">{{ cartItems.length }}</span>
+            </span>
+            <div class="d-flex gap-2 mt-2 mt-md-0">
+                <button (click)="clearCart()" class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-trash3-fill me-1"></i> Clear Cart
+                </button>
+                <a routerLink="/place-order" class="btn btn-success btn-sm">
+                    <i class="bi bi-bag-check-fill me-1"></i> Place Order
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            @for (item of cartItems; track $index) {
+                <div class="col-md-6 col-lg-4 mb-4 animate-fade-in">
+                    <div class="card h-100 shadow-sm border-light">
+                        <app-product-card [productId]="item.productId" [isCart]="true"></app-product-card>
+                        <div class="card-body text-center pt-2">
+                            <span class="badge quantity-badge">
+                                Quantity: {{ item.quantity }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    }

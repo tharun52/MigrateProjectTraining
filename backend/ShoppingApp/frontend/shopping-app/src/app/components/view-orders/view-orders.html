@@ -58,22 +58,24 @@
                   <table class="table table-bordered mt-2">
                     <thead class="table-light">
                       <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
+                        <th style="width: 70%;">Product</th>
+                        <th style="width: 15%;">Quantity</th>
+                        <th style="width: 15%;">Price</th>
                       </tr>
                     </thead>
                     <tbody>
                       @for (detail of order.orderDetails?.$values || []; track $index) {
                         <tr>
                           <td>
-                            <app-product-card
-                              [productId]="detail.productID"
-                              [isCart]="false"
-                            ></app-product-card>
+                            <div class="product-card-large">
+                              <app-product-card
+                                [productId]="detail.productID"
+                                [isCart]="false"
+                              ></app-product-card>
+                            </div>
                           </td>
-                          <td>{{ detail.quantity }}</td>
-                          <td>{{ detail.price | currency }}</td>
+                          <td class="align-middle text-center">{{ detail.quantity }}</td>
+                          <td class="align-middle text-center">{{ detail.price | currency:'INR' }}</td>
                         </tr>
                       }
                     </tbody>
@@ -81,6 +83,8 @@
                 </td>
               </tr>
             }
+
+
           }
         </tbody>
       </table>
