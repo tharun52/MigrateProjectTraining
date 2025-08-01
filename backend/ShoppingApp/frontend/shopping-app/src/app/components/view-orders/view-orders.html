@@ -1,0 +1,89 @@
+<div class="container mt-4">
+  <h2>Your Orders</h2>
+  <button class="btn btn-primary mt-3" (click)="generatePdf()">Download Orders PDF</button> 
+
+  @if (loading) {
+    <div class="text-center mt-4">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p>Loading orders...</p>
+    </div>
+  }
+
+  @if (!loading && orders.length === 0) {
+    <div class="alert alert-info mt-4">
+      No orders found.
+    </div>
+  }
+
+  @if (!loading && orders.length > 0) {
+    <div class="table-responsive mt-4">
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>Order ID</th>
+            <th>Order Name</th>
+            <th>Customer</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Order Date</th>
+            <th>Payment Type</th>
+            <th>Status</th>
+            <th>Products</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (order of orders; track $index) {
+            <tr>
+              <td>{{ order.orderID }}</td>
+              <td>{{ order.orderName }}</td>
+              <td>{{ order.customerName }}</td>
+              <td>{{ order.customerEmail }}</td>
+              <td>{{ order.customerPhone }}</td>
+              <td>{{ order.customerAddress }}</td>
+              <td>{{ order.orderDate | date:'medium' }}</td>
+              <td>{{ order.paymentType }}</td>
+              <td>{{ order.status }}</td>
+              <td>
+                <button class="btn btn-sm btn-primary" (click)="toggleProducts(order.orderID)">
+                  {{ selectedOrderId === order.orderID ? 'Hide' : 'View' }}
+                </button>
+              </td>
+            </tr>
+
+            @if (selectedOrderId === order.orderID) {
+              <tr class="table-secondary">
+                <td colspan="10">
+                  <strong>Products:</strong>
+                  <table class="table table-bordered mt-2">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (detail of order.orderDetails?.$values || []; track $index) {
+                        <tr>
+                          <td>
+                            <app-product-card
+                              [productId]="detail.productID"
+                              [isCart]="false"
+                            ></app-product-card>
+                          </td>
+                          <td>{{ detail.quantity }}</td>
+                          <td>{{ detail.price | currency }}</td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

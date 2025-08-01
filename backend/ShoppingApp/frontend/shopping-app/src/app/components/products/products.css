@@ -1,0 +1,41 @@
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(to right, #8e2de2, #4a00e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Spinner Gradient */
+.text-gradient {
+  border-color: #8e2de2 #4a00e0 #4a00e0 #8e2de2;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.5s ease-in-out;
+}
+
+/* Card Hover */
+app-product-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 20px rgba(138, 43, 226, 0.2);
+  transition: all 0.3s ease;
+  border-radius: 10px;
+}
+
+/* Home Header */
+.home-header {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}

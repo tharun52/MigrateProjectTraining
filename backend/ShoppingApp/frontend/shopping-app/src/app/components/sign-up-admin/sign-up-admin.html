@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <h2>Signup</h2>
+  <h2>Signup as Admin</h2>
 
   @if (error) {
     <div class="alert alert-danger">{{ error }}</div>
@@ -15,7 +15,6 @@
       }
     </div>
 
-    <!-- Password -->
     <div class="mb-3">
       <input type="password" class="form-control" placeholder="Password" formControlName="password" />
       @if (password?.touched && password?.invalid) {
@@ -25,7 +24,6 @@
       }
     </div>
 
-    <!-- Confirm Password -->
     <div class="mb-3">
       <input type="password" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword" />
       @if (confirmPassword?.touched && confirmPassword?.invalid) {
@@ -39,10 +37,19 @@
         </div>
       }
     </div>
-    <!-- Submit Button -->
-    <button class="btn btn-success" type="submit" [disabled]="signupForm.invalid || loading">
+
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Secret Key" formControlName="secretKey" />
+      @if (secretKey?.touched && secretKey?.invalid) {
+        <div class="text-danger mt-1">
+          Secret Key is required
+        </div>
+      }
+    </div>
+
+    <button class="btn btn-primary" type="submit" [disabled]="signupForm.invalid || loading">
       @if (!loading) {
-        Signup
+        Signup as Admin
       }
       @else {
         <span class="spinner-border spinner-border-sm" role="status"></span> Signing up...

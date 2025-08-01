@@ -1,0 +1,26 @@
+.gradient-text {
+  background: linear-gradient(to right, #8e2de2, #4a00e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.custom-btn {
+  padding: 0.6rem 1.4rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.2);
+}
+
+.welcome-img {
+  max-width: 80%;
+  transition: transform 0.3s ease;
+}
+
+.welcome-img:hover {
+  transform: scale(1.05);
+}

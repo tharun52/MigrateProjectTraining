@@ -1,0 +1,41 @@
+<div class="container my-5">
+  <h2 class="text-center mb-4"><i class="bi bi-cash-coin me-1"></i> Place Your Order</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="submitOrder()">
+    <div class="mb-3">
+      <label>Payment Type</label>
+      <select class="form-select" formControlName="PaymentType">
+        <option value="">Select</option>
+        <option value="Cash">Cash</option>
+        <option value="Online">Online</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label>Customer Name</label>
+      <input type="text" class="form-control" formControlName="CustomerName">
+    </div>
+
+    <div class="mb-3">
+      <label>Phone</label>
+      <input type="text" class="form-control" formControlName="CustomerPhone">
+    </div>
+
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" class="form-control" formControlName="CustomerEmail">
+    </div>
+
+    <div class="mb-3">
+      <label>Address</label>
+      <textarea class="form-control" rows="3" formControlName="CustomerAddress"></textarea>
+    </div>
+
+    <button [disabled]="loading || loginForm.invalid" class="btn btn-primary w-100">
+        @if (loading) {
+            <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+        }
+      Place Order
+    </button>
+  </form>
+</div>
